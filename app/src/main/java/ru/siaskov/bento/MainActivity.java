@@ -50,8 +50,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
+    /**
+     * Send request to API
+     * @param url - to api
+     */
     private void sendRequestToApi(String url) {
         RequestQueue queue = Volley.newRequestQueue(this);
 
@@ -92,6 +94,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Parse String from JSON to Array List of Game
+     * @param response String with response from API
+     * @return Array List of Game
+     * @throws JSONException if something goes wrong with JSON parse 
+     */
     private ArrayList<Game> getGameDetails(String response) throws JSONException {
 
         JSONArray jsonGames = new JSONObject(response).getJSONObject("_embedded").getJSONArray("gameses");
