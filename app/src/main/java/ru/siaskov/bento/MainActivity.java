@@ -2,6 +2,7 @@ package ru.siaskov.bento;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -27,15 +28,19 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MyTag";
     private StringRequest stringRequest; // Assume this exists.
     private RequestQueue requestQueue;  // Assume this exists.
-    private Games mGames;
 
+    private ActivityMainBinding mainBinding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       ActivityMainBinding binding = DataBindingUtil.setContentView(MainActivity.this,
+
+        mainBinding = DataBindingUtil.setContentView(this,
                R.layout.activity_main);
+
+        mainBinding.myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mainBinding.myRecyclerView.setHasFixedSize(true );
 
         sendRequestToApi(url);
 
@@ -98,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
      * Parse String from JSON to Array List of Game
      * @param response String with response from API
      * @return Array List of Game
-     * @throws JSONException if something goes wrong with JSON parse 
+     * @throws JSONException if something goes wrong with JSON parse
      */
     private ArrayList<Game> getGameDetails(String response) throws JSONException {
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="game"
+            type="ru.siaskov.bento.Game" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="75dp"
+        android:layout_margin="4dp"
+        android:gravity="center_vertical"
+        android:id="@+id/rootVew"
+        >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"
+                    android:textStyle="bold"
+                    android:id="@+id/teamFirst"
+                    android:text="@{game.teamFirst}">
+
+                </TextView>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold"
+                    android:id="@+id/teamSecond"
+                    android:text="@{game.teamSecond}">
+
+                </TextView>
+
+            </RelativeLayout>
+
+
+    </LinearLayout>
+</layout>
