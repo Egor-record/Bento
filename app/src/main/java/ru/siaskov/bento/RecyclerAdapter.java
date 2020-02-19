@@ -1,8 +1,9 @@
 package ru.siaskov.bento;
 
 import android.content.Context;
+
 import android.view.LayoutInflater;
-import android.view.View;
+
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import ru.siaskov.bento.databinding.GameItemLayoutBinding;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
     private Context context;
+
     private List<Game> games = new ArrayList<>();
 
     public RecyclerAdapter(Context context, List<Game> games) {
@@ -27,18 +29,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
         GameItemLayoutBinding gameItemLayoutBinding = DataBindingUtil.inflate(
-              LayoutInflater.from(viewGroup.get)
-        )
+              LayoutInflater.from(viewGroup.getContext()),
+                                    R.layout.game_item_layout,
+                                    viewGroup, false );
 
-        return null;
+        MyViewHolder myViewHolder = new MyViewHolder(gameItemLayoutBinding);
+
+                return myViewHolder;
+
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+        Game game = games.get(position);
+        holder.gameItemLayoutBinding.setGame(game);
     }
 
     @Override
@@ -55,6 +64,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             gameItemLayoutBinding = itemView;
         }
     }
+
+
+
+
 }
 
 
