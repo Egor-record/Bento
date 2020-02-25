@@ -8,6 +8,7 @@ import android.content.Context;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,9 +26,7 @@ import java.util.List;
 
 import ru.siaskov.bento.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
-
-
+public class MainActivity extends AppCompatActivity  {
 
     private ActivityMainBinding mainBinding;
     private RecyclerAdapter adapter;
@@ -53,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     }
+
+
 
 
     @Override
@@ -116,12 +116,6 @@ public class MainActivity extends AppCompatActivity {
 
         queue.add(stringRequest);
 
-
-//        stringRequest.setTag(TAG);
-//        requestQueue.add(stringRequest);
-
-
-
     }
 
     /**
@@ -137,14 +131,21 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Game> games = new ArrayList<>();
 
         for (int j=0 ; j < jsonGames.length() ; j++) {
+
             games.add(new Game(
                     jsonGames.getJSONObject(j).getString("teamFirst"),
                     jsonGames.getJSONObject(j).getString("teamSecond"),
-                    0, 0, "Football",
+                    toInt(jsonGames.getJSONObject(j).getString("scoreTeamFirst")),
+                    toInt(jsonGames.getJSONObject(j).getString("scoreTeamSecond")),
+                    "Football",
                     "Fifa"));
         }
 
         return games;
+    }
+
+    private int toInt(String jsonString) {
+        return Integer.parseInt(jsonString);
     }
 
 

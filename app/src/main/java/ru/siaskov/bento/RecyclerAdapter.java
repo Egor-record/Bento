@@ -2,10 +2,11 @@ package ru.siaskov.bento;
 
 import android.content.Context;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 
+import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,16 +16,21 @@ import java.util.List;
 
 import ru.siaskov.bento.databinding.GameItemLayoutBinding;
 
+import static ru.siaskov.bento.MainActivity.TAG;
 
-public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
+
+public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder>  {
 
     private Context context;
 
     private List<Game> games = new ArrayList<>();
 
+
+
     public RecyclerAdapter(Context context, List<Game> games) {
         this.context = context;
         this.games = games;
+
     }
 
     @NonNull
@@ -43,6 +49,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
@@ -55,15 +62,28 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         return games.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder {
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener  {
 
         GameItemLayoutBinding gameItemLayoutBinding;
+
 
         public MyViewHolder(@NonNull GameItemLayoutBinding itemView) {
             super(itemView.getRoot());
             gameItemLayoutBinding = itemView;
+            // TODO:  setOnClickListener can't resolve method
+           itemView.setOnClickListener(this);
+
+        }
+
+
+        @Override
+        public void onClick(View view) {
+            Log.e(TAG, "TEst");
         }
     }
+
+
 
 
 

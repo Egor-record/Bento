@@ -8,7 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_height="75dp"
+        android:layout_height="85dp"
         android:layout_margin="4dp"
         android:gravity="center_vertical"
         android:id="@+id/rootVew"
@@ -17,33 +17,46 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:textStyle="bold"
                 android:id="@+id/teamFirst"
                 android:text="@{game.teamFirst}">
-
             </TextView>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="5dp"
                 android:textStyle="bold"
+                android:id="@+id/scoreFirstTeam"
+                android:text="@{String.valueOf(game.scoreFirstTeam)}">
+            </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="35dp"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
                 android:id="@+id/teamSecond"
                 android:text="@{game.teamSecond}">
-
             </TextView>
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="35dp"
+                android:textStyle="bold"
+                android:id="@+id/scoreSecondTeam"
+                android:text="@{String.valueOf(game.scoreSecondTeam)}">
+            </TextView>
         </RelativeLayout>
-
-
     </LinearLayout>
 </layout>

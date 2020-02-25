@@ -51,7 +51,7 @@ public class Game {
     }
 
     public int getScoreFirstTeam() {
-        return scoreFirstTeam;
+        return  scoreFirstTeam ;
     }
 
     public void setScoreFirstTeam(int scoreFirstTeam) {
@@ -59,7 +59,7 @@ public class Game {
     }
 
     public int getScoreSecondTeam() {
-        return scoreSecondTeam;
+        return  scoreSecondTeam;
     }
 
     public void setScoreSecondTeam(int scoreSecondTeam) {
