@@ -1,5 +1,7 @@
 package ru.siaskov.bento;
 
+import java.util.UUID;
+
 public class Game {
 
     private String teamFirst;
@@ -8,6 +10,7 @@ public class Game {
     private int scoreSecondTeam;
     private String typeOfTheGame;
     private String league;
+    private UUID Id;
 
     public Game(String teamFirst, String teamSecond, int scoreFirstTeam, int scoreSecondTeam, String typeOfTheGame, String league) {
         this.teamFirst = teamFirst;
@@ -16,6 +19,7 @@ public class Game {
         this.scoreSecondTeam = scoreSecondTeam;
         this.typeOfTheGame = typeOfTheGame;
         this.league = league;
+        this.Id = UUID.randomUUID();
     }
 
     public String getTeamFirst() {
@@ -51,7 +55,7 @@ public class Game {
     }
 
     public int getScoreFirstTeam() {
-        return  scoreFirstTeam ;
+        return scoreFirstTeam ;
     }
 
     public void setScoreFirstTeam(int scoreFirstTeam) {
@@ -65,4 +69,10 @@ public class Game {
     public void setScoreSecondTeam(int scoreSecondTeam) {
         this.scoreSecondTeam = scoreSecondTeam;
     }
+
+    public UUID getId() {
+        return Id;
+    }
+
+
 }

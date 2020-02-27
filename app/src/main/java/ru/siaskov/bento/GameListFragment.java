@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,14 +34,15 @@ public class GameListFragment extends Fragment {
 
     private ActivityMainBinding mainBinding;
 
-    private String url = "http://192.168.0.151:8080/api/v1/gameses";
+
 
     public static final String TAG = "MyTag";
     private StringRequest stringRequest; // Assume this exists.
     private RequestQueue requestQueue;  // Assume this exists.
-
     private RecyclerView mGamesRecyclerView;
-
+    private GameAdapter mAdapter;
+    private Context context;
+    private static String url = "http://192.168.0.151:8080/api/v1/gameses";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -51,75 +54,31 @@ public class GameListFragment extends Fragment {
 
         mGamesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        updateUI(getActivity());
+
         return view;
 
     }
 
-    private class GameHolder extends RecyclerView.ViewHolder {
+    private void updateUI(FragmentActivity activity)  {
 
 
-        public GameHolder(@NonNull View itemView) {
-            super(itemView);
-        }
-    }
-
-
-
-
-
-    private class GameAdapter extends RecyclerView.Adapter<GameHolder> {
-
-        private List<Game> mGames;
-
-        public GameAdapter(List<Game> games) {
-            mGames = games;
-        }
-
-        @NonNull
-        @Override
-        public GameHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-
-            View view = layoutInflater.inflate(android.R.layout.simple_list_item_1, parent, false);
-
-            return new GameHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull GameHolder holder, int position) {
-            Game game = mGames.get(position);
-
-        }
-
-        @Override
-        public int getItemCount() {
-            return mGames.size();
-        }
-    }
-
-
-
-    /**
-     * Send request to API
-     * @param url - to api
-     */
-    private void sendRequestToApi(String url, final Context _context) throws NullPointerException {
-
-        RequestQueue queue = Volley.newRequestQueue(_context);
+        RequestQueue queue = Volley.newRequestQueue(activity);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
-
                         try {
 
-                            List<Game> games = getGameDetails(response);
+                            GameLab gameLab  = GameLab.get(getActivity(), response);
 
+                            System.out.println(gameLab);
 
+                            List<Game> games = gameLab.getGames();
+                            mAdapter = new GameAdapter(games);
+                            mGamesRecyclerView.setAdapter(mAdapter);
 
 
                         } catch (JSONException e) {
@@ -147,35 +106,79 @@ public class GameListFragment extends Fragment {
 
         queue.add(stringRequest);
 
+
     }
 
-    /**
-     * Parse String from JSON to Array List of Game
-     * @param response String with response from API
-     * @return Array List of Game
-     * @throws JSONException if something goes wrong with JSON parse
-     */
-    private List<Game> getGameDetails(String response) throws JSONException {
+    private class GameHolder extends RecyclerView.ViewHolder {
 
-        JSONArray jsonGames = new JSONObject(response).getJSONObject("_embedded").getJSONArray("gameses");
+        private TextView mFistTeamNameTextView;
+        private TextView mSecondTeamNameTextView;
+        private TextView mFirstTeamScoreTextView;
+        private TextView mSecondTeamScoreTextView;
+        private Game mGame;
 
-        ArrayList<Game> games = new ArrayList<>();
 
-        for (int j=0 ; j < jsonGames.length() ; j++) {
+        public GameHolder(@NonNull View itemView) {
+            super(itemView);
 
-            games.add(new Game(
-                    jsonGames.getJSONObject(j).getString("teamFirst"),
-                    jsonGames.getJSONObject(j).getString("teamSecond"),
-                    toInt(jsonGames.getJSONObject(j).getString("scoreTeamFirst")),
-                    toInt(jsonGames.getJSONObject(j).getString("scoreTeamSecond")),
-                    "Football",
-                    "Fifa"));
+            mFistTeamNameTextView = (TextView) itemView.findViewById(R.id.teamFirst);
+            mSecondTeamNameTextView = (TextView) itemView.findViewById(R.id.teamSecond);
+            mFirstTeamScoreTextView = (TextView) itemView.findViewById(R.id.scoreFirstTeam);
+            mSecondTeamScoreTextView = (TextView) itemView.findViewById(R.id.scoreSecondTeam);
+
         }
 
-        return games;
+        public void bindGame(Game game) {
+            mGame = game;
+
+            mFistTeamNameTextView.setText(mGame.getTeamFirst());
+            mFirstTeamScoreTextView.setText(String.valueOf(mGame.getScoreFirstTeam()));
+
+            mSecondTeamNameTextView.setText(mGame.getTeamSecond());
+            mSecondTeamScoreTextView.setText(String.valueOf(mGame.getScoreSecondTeam()));
+
+
+        }
     }
 
-    private int toInt(String jsonString) {
-        return Integer.parseInt(jsonString);
+
+
+
+
+    private class GameAdapter extends RecyclerView.Adapter<GameHolder> {
+
+        private List<Game> mGames;
+
+        public GameAdapter(List<Game> games) {
+            mGames = games;
+        }
+
+        @NonNull
+        @Override
+        public GameHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+
+            View view = layoutInflater.inflate(R.layout.game_item_layout, parent, false);
+
+            return new GameHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull GameHolder holder, int position) {
+            Game game = mGames.get(position);
+            holder.bindGame(game);
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return mGames.size();
+        }
     }
+
+
+
+
 }
