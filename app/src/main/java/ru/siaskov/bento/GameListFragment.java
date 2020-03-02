@@ -147,7 +147,10 @@ public class GameListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             Toast.makeText(getActivity(), mGame.getTeamFirst(), Toast.LENGTH_SHORT).show();
+          //  Intent intent = GameActivity.newIntent(getActivity(), mGame.getId());
+
             Intent intent = new Intent(getActivity(), GameActivity.class);
+            intent.putExtra("id", mGame.getTeamFirst());
             startActivity(intent);
         }
     }
