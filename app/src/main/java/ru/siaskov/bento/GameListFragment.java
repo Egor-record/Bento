@@ -1,12 +1,14 @@
 package ru.siaskov.bento;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -42,7 +44,7 @@ public class GameListFragment extends Fragment {
     private RecyclerView mGamesRecyclerView;
     private GameAdapter mAdapter;
     private Context context;
-    private static String url = "http://192.168.0.151:8080/api/v1/gameses";
+    private static String url = "http://192.168.43.130:8080/api/v1/gameses";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -109,7 +111,7 @@ public class GameListFragment extends Fragment {
 
     }
 
-    private class GameHolder extends RecyclerView.ViewHolder {
+    private class GameHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView mFistTeamNameTextView;
         private TextView mSecondTeamNameTextView;
@@ -126,6 +128,8 @@ public class GameListFragment extends Fragment {
             mFirstTeamScoreTextView = (TextView) itemView.findViewById(R.id.scoreFirstTeam);
             mSecondTeamScoreTextView = (TextView) itemView.findViewById(R.id.scoreSecondTeam);
 
+            itemView.setOnClickListener(this);
+
         }
 
         public void bindGame(Game game) {
@@ -138,6 +142,13 @@ public class GameListFragment extends Fragment {
             mSecondTeamScoreTextView.setText(String.valueOf(mGame.getScoreSecondTeam()));
 
 
+        }
+
+        @Override
+        public void onClick(View view) {
+            Toast.makeText(getActivity(), mGame.getTeamFirst(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getActivity(), GameActivity.class);
+            startActivity(intent);
         }
     }
 

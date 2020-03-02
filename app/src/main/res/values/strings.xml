@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Bento</string>
+    <string name="activity_game_title">Teams</string>
+    <string name="activity_game_details">Details</string>
 </resources>
