@@ -18,7 +18,9 @@ public class GameActivity extends FragmentActivity {
 
                 String firstName = bundle.getString("id");
 
-                System.out.println(firstName);
+                // TODO: Bind data from bundle to View;
+
+             //   System.out.println(firstName);
 
             }
         }
